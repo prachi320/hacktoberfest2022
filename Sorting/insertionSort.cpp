@@ -1,43 +1,34 @@
-#include <iostream>
-
+#include<iostream>
 using namespace std;
-
-void printArray(int a[], int n)
-{
-    for (int i = 0; i < n; i++)
-    {
-        cout << a[i] << " ";
-    }
-    cout << endl;
+void display(int *array, int size) {
+   for(int i = 0; i<size; i++)
+      cout << array[i] << " ";
+   cout << endl;
 }
-
-void insertionSort(int *a, int n)
-{
-    int key, j;
-
-    for (int i = 1; i <n; i++)
-    {
-        // loop for wach pass
-        int key = a[i];
-        j = i-1;
-        
-        while (j >=0 && a[j] > key)
-        {
-            a[j+1] = a[j];
-            j--;
-        }
-        a[j+1] = key;
-    }
+void insertionSort(int *array, int size) {
+   int key, j;
+   for(int i = 1; i<size; i++) {
+      key = array[i];//take value
+      j = i;
+      while(j > 0 && array[j-1]>key) {
+         array[j] = array[j-1];
+         j--;
+      }
+      array[j] = key;   //insert in right place
+   }
 }
-
-int main()
-{
-    int a[] = {9, 8, 7, 6, 5, 4, 3, 2, 1};
-    // int b[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-
-    int n = 9;
-
-    printArray(a, n);
-    insertionSort(a, n);
-    printArray(a, n);
+int main() {
+   int n;
+   cout << "Enter the number of elements: ";
+   cin >> n;
+   int arr[n];    //create an array with given number of elements
+   cout << "Enter elements:" << endl;
+   for(int i = 0; i<n; i++) {
+      cin >> arr[i];
+   }
+   cout << "Array before Sorting: ";
+   display(arr, n);
+   insertionSort(arr, n);
+   cout << "Array after Sorting: ";
+   display(arr, n);
 }
