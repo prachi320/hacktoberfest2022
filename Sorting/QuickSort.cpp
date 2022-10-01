@@ -1,69 +1,71 @@
-#include <iostream>
-#include <bits/stdc++.h>
-
+#include<iostream>
+#include<cstdio>
+#include<cmath>
 using namespace std;
 
-void printArray(int a[], int n)
+// To print array of length=size
+void printArray(int array[], int size)    
 {
-    for (int i = 0; i < n; i++)
+  int i;
+  for (i=0; i < size; i++)
+    cout<<array[i]<<"\t";
+  cout<<endl;
+}
+
+// To swap two elements
+void swap(int* a, int* b)    
+{
+  int t = *a;
+  *a = *b;
+  *b = t;
+}
+
+/* This function takes last element as pivot, and places all smaller
+   elements to left of pivot and all greater elements to right of pivot */
+int partition (int array[], int low, int high)
+{
+  int pivot = array[high];    // pivot
+  int i = (low - 1);  // Index of smaller element
+  int j;
+
+  for (j = low; j <= high- 1; j++)
+  {
+    if (array[j] <= pivot)
     {
-        cout << a[i] << " ";
+      i++;            // increment index of smaller element
+      swap(&array[i], &array[j]);    // shift all lesser elements in left half
     }
-    cout << endl;
+  }
+  swap(&array[i + 1], &array[high]);    // place pivot element at end of smaller elements
+  return (i + 1);    // the index of pivot element
 }
 
-int partition(int *a, int low, int high)
+// Recursive function to sort array with quicksort
+void quickSort(int array[], int low, int high)
 {
-    int pivot = a[low];
-    int i = low + 1;
-    int j = high;
-    int temp;
+  if (low < high)
+  {
+    int pivot_index;
+    pivot_index = partition(array, low, high);
+    cout<<"Pivot element is "<<array[pivot_index]<<endl;
+    cout<<"Array after pivot partitioning : \n";
+    printArray(array,8);
 
-    do
-    {
-        while (a[i] <= pivot)
-        {
-            i++;
-        }
-
-        while (a[j] > pivot)
-        {
-            j--;
-        }
-
-        if (i < j)
-        {
-            temp = a[i];
-            a[i] = a[j];
-            a[j] = temp;
-        }
-        
-    } while (i < j);
-
-    temp = a[low];
-    a[low] = a[j];
-    a[j] = temp;
-    return j;
+    // Call quicksort() on left half and right half excluding
+    // pivot element as it is already at proper position i.e.
+    // between lesser and greater elements.
+    quickSort(array, low, pivot_index - 1);
+    quickSort(array, pivot_index + 1, high);
+  }
 }
-
-void quickSort(int *arr, int low, int high)
-{
-    int partisanIndex;
-    if (low < high)
-    {
-        partisanIndex = partition(arr, low, high);
-        quickSort(arr, low, partisanIndex - 1);
-        quickSort(arr, partisanIndex + 1, high);
-    }
-}
-
 int main()
 {
-    int a[] = {9, 8, 7, 6, 5, 4, 3, 2, 1};
-
-    int n = 9;
-    printArray(a, n);
-    quickSort(a, 0, n - 1);
-    printArray(a, n);
-    return 0;
+  int array[] = {17, 13, 20, 16, 19, 24, 22, 21};
+  int n = sizeof(array)/sizeof(array[0]);
+  cout<<"Given array: \n";
+  printArray(array, n);
+  quickSort(array, 0, n-1);
+  cout<<"Sorted array: \n";
+  printArray(array, n);
+  return 0;
 }
