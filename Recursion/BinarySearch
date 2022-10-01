@@ -1,0 +1,21 @@
+#include<iostream>
+using namespace std;
+bool binarySearch(int arr[], int start, int end, int key)
+{
+    if(start>end)return false;
+    int mid = start + (end - start)/2;
+    if (arr[mid] == key)
+        return true;;
+    if (key > arr[mid])
+        return binarySearch(arr, mid + 1, end, key);
+    else
+        return binarySearch(arr, start, mid - 1, key);
+}
+int main()
+{
+    int arr[10] = {2, 10, 34, 45, 51, 56, 60, 63, 67, 71};
+    int key;
+    cin >> key;
+    cout << binarySearch(arr, 0, 9, key) << endl;
+    return 0;
+}
